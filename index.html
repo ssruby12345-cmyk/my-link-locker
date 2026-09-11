@@ -1,21 +1,225 @@
 <!DOCTYPE html>
-<html>
+<html lang="si">
 <head>
-    <title>Video Unlock</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Video Unlock</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f5f7;
+    color: #222;
+}
+
+.container {
+    max-width: 650px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 30px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.task {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
+
+.task-title {
+    font-size: 17px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.task button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    background: #5865f2;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.task button:hover {
+    opacity: 0.9;
+}
+
+.complete {
+    color: green;
+    font-weight: bold;
+}
+
+.unlock {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #222;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.unlock:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+
+#message {
+    text-align: center;
+    margin-top: 15px;
+    color: #777;
+}
+</style>
 </head>
+
 <body>
 
-    <h1>🔒 Video Unlock</h1>
+<div class="container">
 
-    <p>ඔයාගේ video එක ලබාගන්න පහත button එක click කරන්න.</p>
+<div class="card">
 
-    <button onclick="unlockVideo()">🔓 Unlock Video</button>
+<h1>🔒 Video Unlock</h1>
 
-    <script>
-        function unlockVideo() {
-            window.location.href = "https://t.me/nikdab21_bot?start=video1";
-        }
-    </script>
+<p class="subtitle">
+Complete the tasks below to unlock your video
+</p>
+
+<div class="task">
+
+<div class="task-title">
+📢 Telegram Task
+</div>
+
+<button id="telegramBtn" onclick="completeTelegram()">
+Open Telegram
+</button>
+
+</div>
+
+<div class="task">
+
+<div class="task-title">
+🌐 Website Task
+</div>
+
+<button id="websiteBtn" onclick="completeWebsite()">
+Visit Website
+</button>
+
+</div>
+
+<button id="unlockBtn" class="unlock" disabled onclick="unlockVideo()">
+🔒 Complete Tasks First
+</button>
+
+<p id="message"></p>
+
+</div>
+
+</div>
+
+<script>
+
+let telegramDone = false;
+let websiteDone = false;
+
+function completeTelegram() {
+
+    window.open(
+        "https://t.me/nikdab21_bot",
+        "_blank"
+    );
+
+    setTimeout(function() {
+
+        telegramDone = true;
+
+        document.getElementById("telegramBtn").innerHTML =
+            "✅ Completed";
+
+        document.getElementById("telegramBtn").disabled = true;
+
+        checkTasks();
+
+    }, 3000);
+}
+
+
+function completeWebsite() {
+
+    window.open(
+        "https://example.com",
+        "_blank"
+    );
+
+    setTimeout(function() {
+
+        websiteDone = true;
+
+        document.getElementById("websiteBtn").innerHTML =
+            "✅ Completed";
+
+        document.getElementById("websiteBtn").disabled = true;
+
+        checkTasks();
+
+    }, 3000);
+}
+
+
+function checkTasks() {
+
+    if (telegramDone && websiteDone) {
+
+        document.getElementById("unlockBtn").disabled = false;
+
+        document.getElementById("unlockBtn").innerHTML =
+            "🔓 Unlock Video";
+
+        document.getElementById("message").innerHTML =
+            "✅ All tasks completed!";
+
+    }
+
+}
+
+
+function unlockVideo() {
+
+    window.location.href =
+        "https://t.me/nikdab21_bot?start=video1";
+
+}
+
+</script>
 
 </body>
 </html>
