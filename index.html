@@ -2,224 +2,213 @@
 <html lang="si">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Video Unlock</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Welcome</title>
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Arial,sans-serif}
+body{
+  color:#fff;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 50% 42%,rgba(120,210,255,.55) 0,rgba(35,115,210,.28) 16%,transparent 42%),
+    radial-gradient(circle at 15% 15%,rgba(0,180,255,.28),transparent 30%),
+    linear-gradient(135deg,#031b3d,#063c83 48%,#02132f);
+  position:relative;
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f4f5f7;
-    color: #222;
+body:before{
+  content:"";
+  position:fixed; inset:-30%;
+  background:conic-gradient(from 0deg,transparent,rgba(77,190,255,.18),transparent 30%,rgba(255,255,255,.10),transparent 55%);
+  animation:spin 16s linear infinite;
+  pointer-events:none;
 }
-
-.container {
-    max-width: 650px;
-    margin: 60px auto;
-    padding: 20px;
+.orb{
+  position:fixed;
+  left:50%;top:42%;
+  width:330px;height:330px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,#fff 0,#a9eaff 4%,#35b9ff 18%,rgba(27,143,255,.28) 43%,transparent 70%);
+  filter:blur(1px);
+  opacity:.75;
+  animation:orb 4s ease-in-out infinite;
+  pointer-events:none;
 }
-
-.card {
-    background: white;
-    border-radius: 14px;
-    padding: 30px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+.stars{position:fixed;inset:0;pointer-events:none}
+.stars i{
+  position:absolute;width:4px;height:4px;border-radius:50%;
+  background:#fff;opacity:0;
+  box-shadow:0 0 10px #fff;
+  animation:rise 5s linear infinite;
 }
+.stars i:nth-child(1){left:8%;top:80%;animation-delay:.2s}
+.stars i:nth-child(2){left:22%;top:65%;animation-delay:1.2s}
+.stars i:nth-child(3){left:38%;top:90%;animation-delay:2s}
+.stars i:nth-child(4){left:62%;top:82%;animation-delay:1s}
+.stars i:nth-child(5){left:79%;top:72%;animation-delay:2.7s}
+.stars i:nth-child(6){left:92%;top:88%;animation-delay:3.5s}
+.stars i:nth-child(7){left:15%;top:35%;animation-delay:3s}
+.stars i:nth-child(8){left:86%;top:30%;animation-delay:1.8s}
 
-h1 {
-    text-align: center;
-    margin-bottom: 10px;
+.wrap{position:relative;z-index:2;width:min(94%,500px);margin:0 auto;padding:28px 0 45px}
+.logo{text-align:center;font-weight:800;font-size:28px;letter-spacing:.5px;text-shadow:0 0 18px rgba(120,220,255,.7);animation:drop .7s ease}
+.sub{text-align:center;margin:7px 0 22px;color:#d7efff;font-size:13px}
+
+.panel{
+  background:rgba(4,20,48,.72);
+  border:1px solid rgba(165,225,255,.28);
+  border-radius:22px;
+  padding:23px 18px;
+  box-shadow:0 18px 60px rgba(0,0,0,.35),0 0 45px rgba(35,164,255,.18);
+  backdrop-filter:blur(16px);
+  animation:panel .8s ease;
 }
-
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-bottom: 30px;
+.welcome{
+  text-align:center;
+  padding:16px 10px 18px;
+  margin-bottom:16px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(28,126,220,.22),rgba(0,20,55,.35));
+  border:1px solid rgba(151,224,255,.2);
 }
+.welcome .big{font-size:24px;font-weight:800;margin-bottom:7px}
+.welcome .si{font-size:14px;color:#e9f8ff}
 
-.task {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 15px;
+.tasks-title{font-size:15px;font-weight:800;margin:6px 3px 12px;color:#eaf7ff}
+
+.task{
+  width:100%;display:flex;align-items:center;gap:12px;
+  border:1px solid rgba(153,215,255,.13);
+  border-radius:14px;padding:12px 12px;margin:9px 0;
+  background:rgba(0,13,35,.68);color:#8ca7c2;
+  transition:.25s;cursor:not-allowed;text-align:left;
 }
-
-.task-title {
-    font-size: 17px;
-    font-weight: bold;
-    margin-bottom: 12px;
+.task.active{color:#fff;cursor:pointer;border-color:rgba(92,198,255,.55);box-shadow:0 0 18px rgba(40,167,255,.12)}
+.task.active:hover{transform:translateY(-2px);background:rgba(18,71,126,.65);box-shadow:0 0 26px rgba(54,185,255,.24)}
+.num{
+  flex:0 0 34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;background:#193456;color:#9eb9d5;font-weight:800;
 }
-
-.task button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 7px;
-    background: #5865f2;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
+.active .num{background:linear-gradient(135deg,#39c4ff,#2477ff);color:#fff;box-shadow:0 0 16px rgba(43,178,255,.5)}
+.tasktext{flex:1}.taskname{font-size:14px;font-weight:800}.desc{font-size:11px;color:#7694b3;margin-top:3px}
+.action{
+  padding:9px 12px;border-radius:10px;border:1px solid rgba(120,210,255,.25);
+  background:#122744;color:#91a9c1;font-size:12px;font-weight:800;white-space:nowrap;
 }
+.active .action{background:linear-gradient(135deg,#208fff,#25b9ff);color:#fff;border:0}
+.done{border-color:rgba(64,221,157,.4)!important}
+.done .num{background:#1caf78;color:#fff}
+.done .action{background:#123f35;color:#71e0b7}
 
-.task button:hover {
-    opacity: 0.9;
+.status{text-align:center;min-height:22px;margin:16px 0 10px;font-size:13px;color:#d7edff}
+#continueBtn{
+  display:none;width:100%;padding:14px;border:0;border-radius:13px;
+  background:linear-gradient(135deg,#fff,#aeeaff);color:#03204b;
+  font-size:15px;font-weight:900;cursor:pointer;
+  box-shadow:0 0 25px rgba(157,229,255,.35);
+  animation:pulse 1.6s infinite;
 }
+.note{text-align:center;color:#7391ae;font-size:11px;margin-top:16px}
 
-.complete {
-    color: green;
-    font-weight: bold;
-}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes orb{0%,100%{transform:translate(-50%,-50%) scale(.82);opacity:.52}50%{transform:translate(-50%,-50%) scale(1.18);opacity:.9}}
+@keyframes rise{0%{transform:translateY(40px);opacity:0}20%{opacity:.9}100%{transform:translateY(-180px);opacity:0}}
+@keyframes panel{from{opacity:0;transform:translateY(25px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:none}}
+@keyframes pulse{50%{box-shadow:0 0 38px rgba(157,229,255,.6)}}
 
-.unlock {
-    width: 100%;
-    padding: 15px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 8px;
-    background: #222;
-    color: white;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.unlock:disabled {
-    background: #aaa;
-    cursor: not-allowed;
-}
-
-#message {
-    text-align: center;
-    margin-top: 15px;
-    color: #777;
+@media(max-width:430px){
+ .wrap{padding-top:20px}
+ .panel{padding:19px 13px;border-radius:18px}
+ .task{gap:9px;padding:11px 9px}
+ .action{padding:8px 9px;font-size:11px}
+ .desc{font-size:10px}
 }
 </style>
 </head>
-
 <body>
+<div class="orb"></div>
+<div class="stars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
-<div class="container">
+<div class="wrap">
+  <div class="logo">✨ Welcome!</div>
+  <div class="sub">Continue to unlock</div>
 
-<div class="card">
+  <div class="panel">
+    <div class="welcome">
+      <div class="big">👋 Welcome!</div>
+      <div class="si">අපගේ සේවාව භාවිතා කිරීමට ස්තූතියි ❤️</div>
+    </div>
 
-<h1>🔒 Video Unlock</h1>
+    <div class="tasks-title">Complete the following tasks</div>
 
-<p class="subtitle">
-Complete the tasks below to unlock your video
-</p>
+    <button class="task active" id="task1" onclick="startTask(1)">
+      <span class="num">1</span>
+      <span class="tasktext"><span class="taskname">Complete Task 1</span><span class="desc">Open the task and wait 10 seconds</span></span>
+      <span class="action">START</span>
+    </button>
 
-<div class="task">
+    <button class="task" id="task2" disabled onclick="startTask(2)">
+      <span class="num">2</span>
+      <span class="tasktext"><span class="taskname">Complete Task 2</span><span class="desc">Locked until Task 1 is completed</span></span>
+      <span class="action">🔒</span>
+    </button>
 
-<div class="task-title">
-📢 Telegram Task
-</div>
+    <button class="task" id="task3" disabled onclick="startTask(3)">
+      <span class="num">3</span>
+      <span class="tasktext"><span class="taskname">Complete Task 3</span><span class="desc">Locked until Task 2 is completed</span></span>
+      <span class="action">🔒</span>
+    </button>
 
-<button id="telegramBtn" onclick="completeTelegram()">
-Open Telegram
-</button>
-
-</div>
-
-<div class="task">
-
-<div class="task-title">
-🌐 Website Task
-</div>
-
-<button id="websiteBtn" onclick="completeWebsite()">
-Visit Website
-</button>
-
-</div>
-
-<button id="unlockBtn" class="unlock" disabled onclick="unlockVideo()">
-🔒 Complete Tasks First
-</button>
-
-<p id="message"></p>
-
-</div>
-
+    <div class="status" id="status"></div>
+    <button id="continueBtn" onclick="finish()">Continue to Bot ➜</button>
+    <div class="note">Thank you for supporting us ❤️</div>
+  </div>
 </div>
 
 <script>
+const taskLinks={
+  1:"https://example.com/task1",
+  2:"https://example.com/task2",
+  3:"https://example.com/task3"
+};
+const WAIT_SECONDS=10;
+const destination="https://t.me/nikdab21_bot?start=video1";
+let currentTask=0,timer=null;
 
-let telegramDone = false;
-let websiteDone = false;
-
-function completeTelegram() {
-
-    window.open(
-        "https://t.me/nikdab21_bot",
-        "_blank"
-    );
-
-    setTimeout(function() {
-
-        telegramDone = true;
-
-        document.getElementById("telegramBtn").innerHTML =
-            "✅ Completed";
-
-        document.getElementById("telegramBtn").disabled = true;
-
-        checkTasks();
-
-    }, 3000);
-}
-
-
-function completeWebsite() {
-
-    window.open(
-        "https://example.com",
-        "_blank"
-    );
-
-    setTimeout(function() {
-
-        websiteDone = true;
-
-        document.getElementById("websiteBtn").innerHTML =
-            "✅ Completed";
-
-        document.getElementById("websiteBtn").disabled = true;
-
-        checkTasks();
-
-    }, 3000);
-}
-
-
-function checkTasks() {
-
-    if (telegramDone && websiteDone) {
-
-        document.getElementById("unlockBtn").disabled = false;
-
-        document.getElementById("unlockBtn").innerHTML =
-            "🔓 Unlock Video";
-
-        document.getElementById("message").innerHTML =
-            "✅ All tasks completed!";
-
+function startTask(n){
+  if(n!==currentTask+1)return;
+  currentTask=n;
+  const b=document.getElementById("task"+n);
+  b.classList.remove("active");b.classList.add("done");
+  b.querySelector(".action").innerText="⏳ 10s";
+  document.getElementById("status").innerText="Please wait 10 seconds...";
+  window.open(taskLinks[n],"_blank");
+  let left=WAIT_SECONDS;
+  timer=setInterval(()=>{
+    left--;
+    if(left>0){
+      document.getElementById("status").innerText="Please wait "+left+" seconds...";
+      b.querySelector(".action").innerText="⏳ "+left+"s";
+    }else{
+      clearInterval(timer);
+      b.querySelector(".action").innerText="✓ DONE";
+      b.querySelector(".desc").innerText="Task completed";
+      if(n<3){
+        const next=document.getElementById("task"+(n+1));
+        next.disabled=false;next.classList.add("active");
+        next.querySelector(".action").innerText="START";
+        next.querySelector(".desc").innerText="Open the task and wait 10 seconds";
+        document.getElementById("status").innerText="✓ Task "+n+" completed. Next task unlocked!";
+      }else{
+        document.getElementById("status").innerText="🎉 All tasks completed!";
+        document.getElementById("continueBtn").style.display="block";
+      }
     }
-
+  },1000);
 }
-
-
-function unlockVideo() {
-
-    window.location.href =
-        "https://t.me/nikdab21_bot?start=video1";
-
-}
-
+function finish(){location.href=destination}
 </script>
-
 </body>
 </html>
